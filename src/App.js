@@ -88,11 +88,11 @@ const App = () => {
 
 
 
-    // TODO crud api function naming rename
+    // TODO crud api function naming rename 통신 테스트용 IP
     /** Select */
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/terms/all');
+            const response = await axios.get('http://52.79.98.68:8080/api/terms/all');
 
             // 필요한 데이터 구조에 맞게 변환
             const apiData = response.data.map((item) => ({
