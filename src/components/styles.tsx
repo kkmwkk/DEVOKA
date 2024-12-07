@@ -6,7 +6,7 @@ export const styles = `
   overflow: hidden;
   align-items: center;
   font-family: Pretendard, sans-serif;
-  padding: 280px 80px 20vh; /* 하단 패딩을 비율로 조정 */
+  padding: 140px 80px 20vh; /* 하단 패딩을 비율로 조정 */
   min-height: 100vh; /* 화면 전체 높이를 보장 */
   box-sizing: border-box; /* 패딩 포함 계산 */
 }
