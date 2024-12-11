@@ -19,3 +19,14 @@ export interface PopularSearchItem {
     term: string;
     isHot?: boolean;
 }
+
+export interface PopularSearchItem4NoSearch {
+    id: number;
+    text: string;
+    isHighlighted?: boolean;
+}
+
+export interface TagItem {
+    id: number;
+    text: string;
+}

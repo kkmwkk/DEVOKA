@@ -43,23 +43,9 @@ export const DictionaryDetail: React.FC = () => {
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
   width: 100%;
 }
-
-
-
-/* 전체 페이지에서 스크롤바가 안 보이게 설정 */
-body {
-  overflow: hidden;
-}
-
-/* 콘텐츠 영역에서만 스크롤바 표시 */
-.content-wrapper {
-  overflow-y: auto;
-  height: calc(100vh - 50px); /* 상단 헤더를 제외한 나머지 영역에 스크롤을 적용 */
-}
-
 
 .dictionary {
   background-color: #f6f8fa;
@@ -67,8 +53,11 @@ body {
 
 .dictionary-header {
   background-color: #fff;
-  padding: 16px 7%; /* 비율 기반 패딩으로 수정 */
+  padding: 16px 7%;
   box-sizing: border-box;
+  position: sticky; /* 헤더를 고정 */
+  top: 0;
+  z-index: 1000;
 }
 
 .header-content {
@@ -76,7 +65,6 @@ body {
   align-items: center;
   gap: 16px;
   max-width: 592px;
-  
 }
 
 .header-title {
@@ -102,12 +90,11 @@ body {
 }
 
 .dictionary-main {
-  padding: 32px 5%; /* 비율 기반 패딩 */
-
+  padding: 32px 5%;
 }
 
 .content-wrapper {
-  max-width: 1238px;
+  min-height: calc(100vh - 50px); /* 헤더를 제외한 전체 높이 */
   margin: 0 auto;
   display: flex;
   gap: 20px;
@@ -116,33 +103,32 @@ body {
 
 .dictionary-content {
   flex: 1;
-  overflow-y: auto; /* 이 부분만 스크롤 가능 */
-
 }
 
 .sidebar {
-  width: 30%; /* 비율 기반 너비 */
+  width: 30%;
 }
 
 @media (max-width: 991px) {
   .dictionary-header {
-    padding: 10px 16px; /* 작은 화면에서 패딩 감소 */
+    padding: 10px 16px;
   }
 
   .header-content {
-    flex-direction: column; /* 헤더 콘텐츠를 세로로 정렬 */
+    flex-direction: column;
     gap: 10px;
   }
 
   .content-wrapper {
     flex-direction: column;
-    padding: 0 16px; /* 작은 화면에서 양쪽 패딩 축소 */
+    padding: 0 16px;
   }
 
   .sidebar {
-    width: 100%; /* 작은 화면에서 전체 너비로 확장 */
+    width: 100%;
   }
 }
+
       `}</style>
         </div>
     );

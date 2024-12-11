@@ -49,6 +49,7 @@ export const DictionaryDetailList: React.FC<DictionaryListProps> = ({ items, cat
         .dictionary-list {
           display: flex;
           flex-direction: column;
+          overflow: hidden; /* 내부 스크롤 방지 */
         }
         .dictionary-item {
           padding: 32px 0;
