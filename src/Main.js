@@ -18,8 +18,9 @@ const Main = () => {
 
     return (
         <>
-        <Button onClick={handleGoToOtherPage}></Button><Button onClick={handleGoToOtherPage4NoSearch}></Button>
-        <Dictionary></Dictionary>
+            <Button onClick={handleGoToOtherPage}></Button>
+            <Button onClick={handleGoToOtherPage4NoSearch}></Button>
+            <Dictionary></Dictionary>
         </>
     );
 };

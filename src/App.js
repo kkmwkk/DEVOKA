@@ -10,9 +10,9 @@ const App = () => {
             <Routes>
                 {/* 메인 페이지 */}
                 <Route path="/" element={<Main />} />
-                {/* 다른 페이지 */}
+                {/* Detail 페이지 */}
                 <Route path="/detail" element={<DetailPage />} />
-                {/* NoSearch 페이지 */}
+                {/* Detail NoSearch 페이지 */}
                 <Route path="/detailNoSearch" element={<DetailNoSearchPage />} />
             </Routes>
         </Router>
