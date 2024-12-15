@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { CategoryProps } from '../type';
 import { Tooltip } from 'antd'; // Tooltip을 위해 antd를 사용합니다.
 import {CategoryItemProps} from "../CategoryTypes";
 
@@ -25,7 +24,19 @@ export const CategoryList: React.FC = () => {
 
 
 const CategoryItem: React.FC<CategoryItemProps> = ({ label, isActive = false }) => (
-    <Tooltip title={`${label} 용어 페이지로 이동해요!`} placement="bottom">
+    <Tooltip title={`${label} 용어 페이지로 이동해요!`}
+             placement="bottom"
+             overlayClassName={`tooltip-${label}`}
+             overlayInnerStyle={{
+                 backgroundColor: '#1f1f1f', // 배경색
+                 color: '#fff', // 텍스트 색상
+                 padding: '5px 12px 5px 13px', // 텍스트 주변 패딩
+                 borderRadius: '6px', // 모서리 둥글게
+                 fontSize: '14px', // 폰트 크기
+                 fontWeight: '400', // 폰트 굵기
+                 textAlign: 'center', // 텍스트 중앙 정렬
+             }}
+    >
 
     <div className={`category-item ${isActive ? 'active' : ''}`}>
         {label}
@@ -45,6 +56,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ label, isActive = false }) 
       .category-item:hover {
         color: rgba(255, 111, 29, 1); /* 마우스 hover 시 색 변경 */
       }
+      
     `}</style>
     </div>
     </Tooltip>
