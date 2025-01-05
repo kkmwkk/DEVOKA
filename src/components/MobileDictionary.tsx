@@ -44,6 +44,23 @@ export const MobileDictionary: React.FC = () => {
           gap: 20px;
           justify-content: space-between;
         }
+        
+        /* Safari 기본 스타일 제거 */
+        input {
+            -webkit-appearance: none; /* iOS 기본 스타일 제거 */
+            appearance: none; /* 다른 브라우저에서도 적용 */
+            background-color: transparent; /* 배경색 투명화 */
+            box-shadow: none; /* 박스 그림자 제거 */
+        }
+        
+        /* 검색 창일 경우 */
+        input[type="search"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
       `}</style>
         </div>
     );
