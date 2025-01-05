@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {MobileMainCategoryButton} from "./MobileMainCategoryButton";
-import {MobileMainSearchBar} from "./MobileMainSearchBar";
+import { MobileMainCategoryButton } from './MobileMainCategoryButton';
+import { MobileMainSearchBar } from './MobileMainSearchBar';
 
 export const MobileDictionary: React.FC = () => {
     const categories = ['개발', '경영', '디자인', '마케팅'];
@@ -14,8 +14,14 @@ export const MobileDictionary: React.FC = () => {
             <h1 className="dictionary-title">IT용어 백과사전</h1>
             <MobileMainSearchBar placeholder="검색어를 입력하세요." onSearch={handleSearch} />
             <div className="categories-container">
-                {categories.map((category) => (
-                    <MobileMainCategoryButton key={category} label={category} />
+                {categories.map((category, index) => (
+                    <React.Fragment key={category}>
+                        <MobileMainCategoryButton label={category} />
+                        {/* 마지막 요소에는 구분 기호를 추가하지 않음 */}
+                        {index < categories.length - 1 && (
+                            <span className="category-separator">•</span>
+                        )}
+                    </React.Fragment>
                 ))}
             </div>
             <style>{`
@@ -41,10 +47,14 @@ export const MobileDictionary: React.FC = () => {
           margin-top: 28px;
           width: 251px;
           max-width: 100%;
-          gap: 20px;
-          justify-content: space-between;
+          gap: 8px; /* 카테고리와 구분 기호 간의 간격 */
+          justify-content: center;
+          align-items: center;
         }
-        
+        .category-separator {
+          color: rgba(200, 200, 200, 1); /* 회색 점 색상 */
+          font-size: 16px; /* 점 크기 */
+        }
         /* Safari 기본 스타일 제거 */
         input {
             -webkit-appearance: none; /* iOS 기본 스타일 제거 */
@@ -52,7 +62,6 @@ export const MobileDictionary: React.FC = () => {
             background-color: transparent; /* 배경색 투명화 */
             box-shadow: none; /* 박스 그림자 제거 */
         }
-        
         /* 검색 창일 경우 */
         input[type="search"] {
             -webkit-appearance: none;
