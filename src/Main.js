@@ -15,11 +15,16 @@ const Main = () => {
         navigate('/detailNoSearch');
     };
 
+    // MainPage(Mobile)
+    const handleGoToMobileMainPage = () => {
+        navigate('/mobile')
+    }
 
     return (
         <>
             <Button onClick={handleGoToOtherPage}></Button>
             <Button onClick={handleGoToOtherPage4NoSearch}></Button>
+            <Button onClick={handleGoToMobileMainPage}></Button>
             <Dictionary></Dictionary>
         </>
     );
