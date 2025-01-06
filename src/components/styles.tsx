@@ -53,7 +53,7 @@ export const styles = `
   font-weight: 400;
   letter-spacing: -0.35px;
   line-height: 1;
-  padding: 0 20px; /* 높이에 맞게 패딩 조정 */
+  padding: 0 16px; /* 높이에 맞게 패딩 조정 */
   border: 1px solid rgba(235, 235, 235, 1);
   margin-bottom: 26px; /* 타이틀 아래 간격을 26px로 설정 */
 }

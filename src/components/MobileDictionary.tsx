@@ -36,23 +36,27 @@ export const MobileDictionary: React.FC = () => {
           margin: 0 auto;
         }
         .dictionary-title {
-          color: rgba(31, 31, 31, 1);
+          color: #1F1F1F;
           letter-spacing: -0.5px;
+          width: 166px; // max width 로 바꿔야할듯
           text-align: center;
-          margin-top: 236px;
-          font: 600 20px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
+          margin-top: 100px;
+          margin-bottom: 20px;
+          font: 600 26px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
         }
         .categories-container {
           display: flex;
-          margin-top: 28px;
+          margin-top: 20px;
+          margin-left: 64px;
+          margin-right: 65px;
           width: 251px;
           max-width: 100%;
-          gap: 8px; /* 카테고리와 구분 기호 간의 간격 */
+          gap: 16px; /* 카테고리와 구분 기호 간의 간격 */
           justify-content: center;
           align-items: center;
         }
         .category-separator {
-          color: rgba(200, 200, 200, 1); /* 회색 점 색상 */
+          color: #EBEBEB; /* 회색 점 색상 */
           font-size: 16px; /* 점 크기 */
         }
         /* Safari 기본 스타일 제거 */
@@ -68,6 +72,10 @@ export const MobileDictionary: React.FC = () => {
             appearance: none;
             background-color: transparent;
             box-shadow: none;
+        }
+        
+        input, textarea {
+            font-size: 16px;
         }
 
       `}</style>

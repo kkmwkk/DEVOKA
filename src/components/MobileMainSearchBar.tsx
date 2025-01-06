@@ -24,14 +24,17 @@ export const MobileMainSearchBar: React.FC<MobileMainSearchBarProps> = ({ placeh
             <style>{`
         .search-container {
           border-radius: 8px;
+          margin-left: 42px;
+          margin-right: 42px;
           background-color: rgba(255, 255, 255, 1);
           display: flex;
           width: 100%;
-          max-width: 327px;
+          max-width: 307px;
           gap: 20px;
           justify-content: space-between;
+          box-shadow: 0px 4px 10px rgba(35, 48, 59, 0.08); /* 그림자 효과 */
           padding: 10px 20px;
-          border: 1px solid rgba(235, 235, 235, 1);
+          border: 1px solid #FF6F1D;
         }
         .search-input {
           border: none;
