@@ -22,3 +22,14 @@ export interface MobileDetailCategoryProps {
 export interface MobileDetailDictionaryCardProps {
     item: MobileDetailDictionaryItem;
 }
+
+export interface MobileDetailSearchItemProps {
+    rank: number;
+    term: string;
+    isTop3?: boolean;
+}
+
+export interface MobileDetailSearchListProps {
+    items: MobileDetailSearchItemProps[];
+    timestamp: string;
+}

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { MobileDetailCategory } from './MobileDetailCategory';
 import { MobileDetailDictionaryCard } from './MobileDetailDictionaryCard';
 import { categories, allCategoryItems } from './mobile/data';
+import { MobilePopularSearches } from './MobilePopularSearches';
+
 
 export const MobileDetailDictionaryPage: React.FC = () => {
     const [activeCategory, setActiveCategory] = React.useState('전체');
@@ -18,7 +20,9 @@ export const MobileDetailDictionaryPage: React.FC = () => {
         <div className="dictionary-container">
             <div className="header">
                 <h1>IT용어백과사전</h1>
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0942d2330b7121e64ed4d31c4a3c6aad2e6c3799edd5e44eab1732e3610d6ed?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60" alt="" className="search-icon" />
+                <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0942d2330b7121e64ed4d31c4a3c6aad2e6c3799edd5e44eab1732e3610d6ed?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                    alt="" className="search-icon"/>
             </div>
             <main className="main-content">
                 <div className="categories-outer">
@@ -37,15 +41,21 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                     <div key={category} className="category-section">
                         <h2 className="section-title">{category}</h2>
                         {allCategoryItems[category].slice(0, 4).map((item) => (
-                            <MobileDetailDictionaryCard key={item.title} item={item} />
+                            <MobileDetailDictionaryCard key={item.title} item={item}/>
                         ))}
                         <button className="more-button">
                             <span>{category} 더보기</span>
-                            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60" alt="" className="arrow-icon" />
+                            <img
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                                alt="" className="arrow-icon"/>
                         </button>
                     </div>
+
                 ))}
+                {/* 인기 검색어 컴포넌트를 마지막에 추가 */}
+                <MobilePopularSearches/>
             </main>
+
             <style>{`
         .dictionary-container {
           background-color: rgba(246, 248, 250, 1);
@@ -122,6 +132,10 @@ export const MobileDetailDictionaryPage: React.FC = () => {
           width: 12px;
           height: 12px;
         }
+
+        
+
+        
       `}</style>
         </div>
     );
