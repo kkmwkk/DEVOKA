@@ -63,9 +63,9 @@ export const MobilePopularSearches: React.FC = () => {
         .popular-title {
           height:22px;
           width:81px;
-          color: rgba(31, 31, 31, 1);
+          color: #1F1F1F;
           font-size: 18px;
-          font-weight: 600;
+          font-weight: 500;
           line-height: 1;
           letter-spacing: -0.45px;
           margin: 0;
@@ -74,7 +74,7 @@ export const MobilePopularSearches: React.FC = () => {
         .timestamp {
           font-size: 14px;
           font-weight: 400;
-          color: rgba(118, 118, 118, 1);
+          color: #767676;
           white-space: nowrap; /* 한 줄로 표시 */
           overflow: hidden;
         }

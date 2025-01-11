@@ -7,9 +7,8 @@ export const MobileDetailCategory: React.FC<MobileDetailCategoryProps> = ({ labe
             {label}
             <style>{`
         .MobileDetailCategory {
-          width: 63px;
-          height: 40px;
-          font-size: 14px;
+          width: 66px !important;
+          height: 40px !important;
           text-align: center;
           display: flex;
           align-items: center;
@@ -17,6 +16,10 @@ export const MobileDetailCategory: React.FC<MobileDetailCategoryProps> = ({ labe
           background-color: rgba(246, 248, 250, 1);
           border-radius: 0;
           cursor: pointer;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 2;
+          font-family: 'Pretendard', -apple-system, Roboto, Helvetica, sans-serif;
         }
         .active {
           background-color: rgba(255, 111, 29, 1);

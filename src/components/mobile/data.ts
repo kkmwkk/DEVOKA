@@ -55,6 +55,16 @@ export const allCategoryItems: Record<string, Array<{ title: string; titleEn: st
             title: '회계',
             titleEn: 'Accounting',
             description: '재무 정보의 기록, 요약, 분석 및 보고 과정'
+        },
+        {
+            title: '경영 전략',
+            titleEn: 'Business Strategy',
+            description: '기업의 목표를 달성하기 위한 장기적 계획 및 실행 전략'
+        },
+        {
+            title: '회계',
+            titleEn: 'Accounting',
+            description: '재무 정보의 기록, 요약, 분석 및 보고 과정'
         }
     ],
     '디자인': [

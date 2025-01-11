@@ -4,7 +4,6 @@ import { MobileDetailDictionaryCard } from './MobileDetailDictionaryCard';
 import { categories, allCategoryItems } from './mobile/data';
 import { MobilePopularSearches } from './MobilePopularSearches';
 
-
 export const MobileDetailDictionaryPage: React.FC = () => {
     const [activeCategory, setActiveCategory] = React.useState('전체');
 
@@ -39,8 +38,8 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 </div>
                 {displayedCategories.map((category) => (
                     <div key={category} className="category-section">
-                        <h2 className="section-title">{category}</h2>
-                        {allCategoryItems[category].slice(0, 4).map((item) => (
+                        {/*<h2 className="section-title">{category}</h2>*/}
+                        {allCategoryItems[category].slice(0, 4).map((item, index) => (
                             <MobileDetailDictionaryCard key={item.title} item={item}/>
                         ))}
                         <button className="more-button">
@@ -49,14 +48,23 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
                                 alt="" className="arrow-icon"/>
                         </button>
-                    </div>
 
+                    </div>
                 ))}
                 {/* 인기 검색어 컴포넌트를 마지막에 추가 */}
                 <MobilePopularSearches/>
             </main>
 
+
+
             <style>{`
+        /*    
+        .section-title {
+          font-size: 16px;
+          font-weight: 600;
+          margin: 8px 0;
+        }
+        */
         .dictionary-container {
           background-color: rgba(246, 248, 250, 1);
           display: flex;
@@ -78,22 +86,25 @@ export const MobileDetailDictionaryPage: React.FC = () => {
           box-sizing: border-box;
         }
         .header h1 {
-          font: 600 24px/1.2 Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
+          font: 600 26px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
           margin: 0;
         }
         .search-icon {
-          width: 24px;
-          height: 24px;
+          width: 28px;
+          height: 28px;
         }
         .main-content {
           background-color: #fff;
-          padding: 0 24px 24px;
+          padding: 0 16px 16px;
           box-sizing: border-box;
         }
         .categories-outer {
-          width: 327px;
+          width: 343px;
           height: 52px;
-          margin: 0 auto 24px;
+          margin: 0 auto 10px;
+          margin-left: 0px;
+          margin-right: 0px;
+          margin-top: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -101,41 +112,58 @@ export const MobileDetailDictionaryPage: React.FC = () => {
           border-radius: 8px;
         }
         .categories-inner {
-          width: 315px;
+          width: 330px;
           height: 40px;
           display: flex;
           gap: 0;
         }
-        .section-title {
-          font-size: 20px;
-          font-weight: 600;
-          margin: 24px 0;
-        }
-        .more-button {
+        .category-section .dictionary-card {
+          width: 343px;
+          min-height: 156px;
+          border-bottom: 1px solid rgba(235, 235, 235, 1);
           display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border: 1px solid rgba(235, 235, 235, 1);
-          border-radius: 8px;
-          padding: 10px 48px;
-          margin: 16px auto;
-          background: none;
-          cursor: pointer;
-          color: #000; /* 명시적으로 검정색 설정 */
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          padding: 24px 0px 24px 0px;
+          box-sizing: border-box;
+        }
+        .category-section .dictionary-card:last-of-type {
+          border-bottom: none; /* 마지막 dictionary-card의 border-bottom 제거 */
+        }
+
+        .more-button {
+          width: 343px; /* 버튼 전체 너비 */
+          height: 48px; /* 버튼 전체 높이 */
+          display: flex;
+          align-items: center; /* 세로 중앙 정렬 */
+          justify-content: center; /* 가로 중앙 정렬 */ㄴ
+          gap: 6px; /* 아이콘과 텍스트 간격 설정 */
+          border: 1px solid rgba(235, 235, 235, 1); /* 테두리 */
+          border-radius: 8px; /* 모서리 둥글게 */
+          padding: 0; /* 내부 여백 제거 */
+          background: none; /* 배경 없음 */
+          cursor: pointer; /* 클릭 커서 */
+          color: #000; /* 글자 색상 */
           text-decoration: none; /* 링크 스타일 제거 */
+          box-sizing: border-box; /* 크기 계산 포함 */
+          margin-bottom: 4px;
         }
+        
         .more-button span {
-          color: inherit; /* 버튼 색상 상속 */
-        }       
-        .arrow-icon {
-          width: 12px;
-          height: 12px;
+          font-size: 16px; /* 폰트 크기 */
+          font-weight: 400; /* 기본 굵기 */
+          line-height: 1; /* 텍스트 높이 */
+          text-align: center; /* 텍스트 중앙 정렬 */
+          white-space: nowrap; /* 텍스트를 한 줄로 유지 */
         }
-
+        
+        .arrow-icon {
+          width: 16px; /* 아이콘 너비 */
+          height: 16px; /* 아이콘 높이 */
+        }
         
 
-        
       `}</style>
         </div>
     );

@@ -4,36 +4,37 @@ import { MobileDetailDictionaryCardProps } from './mobile/types';
 export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProps> = ({ item }) => {
     return (
         <div className="dictionary-card">
-            <h3 className="title">{item.title}</h3>
-            <div className="title-en">{item.titleEn}</div>
-            <p className="description">{item.description}</p>
+            <h3 className="title">{item.title || "Untitled"}</h3>
+            <div className="title-en">{item.titleEn || "No English title available"}</div>
+            <p className="description">{item.description || "No description provided."}</p>
             <style>{`
         .dictionary-card {
-          width: 327px;
-          height: 156px;
+          width: 343px;
+          min-height: 156px;
           border-bottom: 1px solid rgba(235, 235, 235, 1);
           display: flex;
           flex-direction: column;
-          padding: 16px 0;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 0px;
+          box-sizing: border-box;
         }
         .title {
-          font-size: 16px;
-          width: 327px;
-          height: 20px;
+          font-size: 18px;
+          color: #1048BE;
+          font-weight: 500;
+          margin: 0 0 6px;
           line-height: 1.4;
-          margin: 0 0 4px;
         }
         .title-en {
           color: rgba(181, 181, 183, 1);
           font-size: 14px;
-          width: 327px;
-          height: 20px;
-          margin: 0 0 4px;
+          margin: 0 0 6px;
+          line-height: 1.4;
         }
         .description {
-          font-size: 14px;
-          width: 327px;
-          height: 69px;
+          color: #444449;
+          font-size: 16px;
           line-height: 1.5;
           margin: 0;
         }

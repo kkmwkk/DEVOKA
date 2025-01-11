@@ -13,7 +13,7 @@ export const MobileDetailSearchItem: React.FC<MobileDetailSearchItemProps> = ({ 
           min-height: 36px;
           align-items: center;
           gap: 12px;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 400;
           white-space: nowrap;
           line-height: 1;
@@ -24,13 +24,14 @@ export const MobileDetailSearchItem: React.FC<MobileDetailSearchItemProps> = ({ 
           align-self: stretch;
           width: 15px;
           margin: auto 0;
-          color: rgba(31, 31, 31, 1); /* 기본 색상 */
+          color: #1F1F1F
+          font-weight: 600;
         }
         .rank.top-rank {
-          color: rgba(22, 39, 223, 1); /* Top 3 색상 */
+          color: #FF6F1D; /* Top 3 색상 */
         }
         .term {
-          color: rgba(31, 31, 31, 1);
+          color: #1F1F1F;
           letter-spacing: -0.35px;
           align-self: stretch;
           width: 230px;
