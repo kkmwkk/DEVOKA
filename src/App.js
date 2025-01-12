@@ -4,6 +4,7 @@ import DetailNoSearchPage from "./DetailNoSearchPage";
 import Main from "./Main"
 import MobileMain from "./MobileMain";
 import {MobileDetailDictionaryPage} from "./components/MobileDetailDictionaryPage";
+import MobileDetailSearchPage from "./components/MobileDetailSearchPage";
 
 
 const App = () => {
@@ -20,6 +21,9 @@ const App = () => {
                 <Route path="/mobile" element={<MobileMain />} />
                 {/* MobileDetail 페이지 */}
                 <Route path="/mobileDetail" element={<MobileDetailDictionaryPage />} />
+                {/* MobileDetailSearch 페이지 */}
+                <Route path="/mobileSearch" element={<MobileDetailSearchPage />} />
+
             </Routes>
         </Router>
 

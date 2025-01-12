@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // React Router 사용
 import { MobileDetailCategory } from './MobileDetailCategory';
 import { MobileDetailDictionaryCard } from './MobileDetailDictionaryCard';
 import { categories, allCategoryItems } from './mobile/data';
@@ -6,14 +7,20 @@ import { MobilePopularSearches } from './MobilePopularSearches';
 
 export const MobileDetailDictionaryPage: React.FC = () => {
     const [activeCategory, setActiveCategory] = React.useState('전체');
+    const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
 
     const handleCategoryChange = (category: string) => {
         setActiveCategory(category);
     };
 
-    const displayedCategories = activeCategory === '전체'
-        ? categories.filter((category) => category !== '전체')
-        : [activeCategory];
+    const displayedCategories =
+        activeCategory === '전체'
+            ? categories.filter((category) => category !== '전체')
+            : [activeCategory];
+
+    const handleSearchIconClick = () => {
+        navigate('/mobileSearch'); // "/search" 경로로 이동
+    };
 
     return (
         <div className="dictionary-container">
@@ -21,7 +28,11 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 <h1>IT용어백과사전</h1>
                 <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0942d2330b7121e64ed4d31c4a3c6aad2e6c3799edd5e44eab1732e3610d6ed?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                    alt="" className="search-icon"/>
+                    alt="search"
+                    className="search-icon"
+                    onClick={handleSearchIconClick} // 클릭 이벤트 추가
+                    style={{ cursor: 'pointer' }} // 클릭 가능한 커서 스타일
+                />
             </div>
             <main className="main-content">
                 <div className="categories-outer">
@@ -38,33 +49,22 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 </div>
                 {displayedCategories.map((category) => (
                     <div key={category} className="category-section">
-                        {/*<h2 className="section-title">{category}</h2>*/}
-                        {allCategoryItems[category].slice(0, 4).map((item, index) => (
-                            <MobileDetailDictionaryCard key={item.title} item={item}/>
+                        {allCategoryItems[category].slice(0, 4).map((item) => (
+                            <MobileDetailDictionaryCard key={item.title} item={item} />
                         ))}
                         <button className="more-button">
                             <span>{category} 더보기</span>
                             <img
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                                alt="" className="arrow-icon"/>
+                                alt=""
+                                className="arrow-icon"
+                            />
                         </button>
-
                     </div>
                 ))}
-                {/* 인기 검색어 컴포넌트를 마지막에 추가 */}
-                <MobilePopularSearches/>
+                <MobilePopularSearches />
             </main>
-
-
-
             <style>{`
-        /*    
-        .section-title {
-          font-size: 16px;
-          font-weight: 600;
-          margin: 8px 0;
-        }
-        */
         .dictionary-container {
           background-color: rgba(246, 248, 250, 1);
           display: flex;
@@ -92,6 +92,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
         .search-icon {
           width: 28px;
           height: 28px;
+          cursor: pointer;
         }
         .main-content {
           background-color: #fff;
@@ -101,10 +102,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
         .categories-outer {
           width: 343px;
           height: 52px;
-          margin: 0 auto 10px;
-          margin-left: 0px;
-          margin-right: 0px;
-          margin-top: 10px;
+          margin: 10px auto;
           display: flex;
           justify-content: center;
           align-items: center;
