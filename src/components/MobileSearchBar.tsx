@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 
-const MobileSearchBar: React.FC = () => {
-    const [searchValue, setSearchValue] = useState('');
+interface MobileSearchBarProps {
+    onSearch?: (value: string) => void; // 검색 결과를 상위 컴포넌트로 전달하는 콜백 함수 (선택적)
+}
 
-    const handleSearch = (value: string) => {
-        console.log('Search value:', value); // 검색 로직 추가 가능
+const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
+    const [searchValue, setSearchValue] = useState(''); // 검색어 상태 관리
+
+    // 검색 실행 함수
+    const handleSearch = () => {
+        if (searchValue.trim() && onSearch) {
+            onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
+            setSearchValue(''); // 검색어 초기화
+        }
     };
 
+    // 입력 필드 변경 시 호출
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setSearchValue(value);
-        handleSearch(value);
+        setSearchValue(e.target.value); // 검색어 상태 업데이트
+    };
+
+    // Enter 키 입력 시 검색 실행
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
     };
 
     return (
@@ -25,20 +39,29 @@ const MobileSearchBar: React.FC = () => {
             {/* 검색 입력 */}
             <div className="mobile-search-container">
                 <div className="search-wrapper">
-                    <img
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/a85e20ee8e286f8e52bbd8e1ee5cafe73ccfa9449f1201a9b3cec027d81de3b9?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                        alt="Search icon"
+                    {/* 돋보기 아이콘 버튼 */}
+                    <button
                         className="search-icon"
-                    />
+                        onClick={handleSearch} // 돋보기 클릭 시 검색 실행
+                    >
+                        <img
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a85e20ee8e286f8e52bbd8e1ee5cafe73ccfa9449f1201a9b3cec027d81de3b9?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                            alt="Search icon"
+                            style={{ width: '28px', height: '28px' }}
+                        />
+                    </button>
+                    {/* 검색 입력 필드 */}
                     <input
                         type="text"
                         className="search-input"
                         placeholder="검색어를 입력하세요."
                         value={searchValue}
-                        onChange={handleInputChange}
+                        onChange={handleInputChange} // 검색어 변경 시 호출
+                        onKeyPress={handleKeyPress} // Enter 키 입력 시 호출
                         aria-label="Search input"
                     />
                 </div>
+                {/* Clear 아이콘 */}
                 <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/358b043f13d6ea5d59b0b6e3e906dd664c92e06eb9d6bca4fcdf69c118e128b6?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
                     alt="Clear icon"
@@ -46,64 +69,56 @@ const MobileSearchBar: React.FC = () => {
                 />
             </div>
 
+            {/* 스타일 정의 */}
             <style>{`
-        .header {
-          border-radius: 0;
-          display: flex;
-          max-width: 375px;
-          color: #767676;
-          letter-spacing: -0.35px;
-          font: 400 14px/1 Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
-          background-color: #fff;
-          gap: 8px;
-          padding: 0px 0px 0px 0px;
-        }
-        .menu-icon {
-          aspect-ratio: 1;
-          object-fit: contain;
-          object-position: center;
-          width: 28px;
-          margin: auto 0;
-        }
-        .mobile-search-container {
-            width: 289px !important;
-            height: 48px !important;
-            display: flex;
-            align-items: center;
-            background-color: #fff;
-            border: 1px solid #ebebeb;
-            border-radius: 8px;
-            padding: 0 12px;
-            box-sizing: border-box;
-        }
-        .search-wrapper {
-          display: flex;
-          gap: 6px;
-          flex-grow: 1; /* 검색 입력 필드가 가용 공간을 채움 */
-        }
-        .search-icon {
-          aspect-ratio: 1;
-          object-fit: contain;
-          object-position: center;
-          width: 28px;
-        }
-        .search-input {
-          border: none;
-          outline: none;
-          font-size: 14px;
-          color: #767676;
-          flex-grow: 1;
-          background: transparent;
-        }
-        .options-icon {
-          aspect-ratio: 1;
-          object-fit: contain;
-          object-position: center;
-          width: 24px;
-          margin-left: 16px; /* X 아이콘과 검색 입력 필드 사이의 간격 증가 */
-          margin: auto 0;
-        }
-      `}</style>
+                .header {
+                  display: flex;
+                  max-width: 375px;
+                  background-color: #fff;
+                  gap: 8px;
+                  padding: 0;
+                }
+                .menu-icon {
+                  width: 28px;
+                  margin: auto 0;
+                }
+                .mobile-search-container {
+                    width: 289px;
+                    height: 48px;
+                    display: flex;
+                    align-items: center;
+                    background-color: #fff;
+                    border: 1px solid #ebebeb;
+                    border-radius: 8px;
+                    padding: 0 12px;
+                    box-sizing: border-box;
+                }
+                .search-wrapper {
+                  display: flex;
+                  gap: 6px;
+                  flex-grow: 1;
+                }
+                .search-icon {
+                  background: none;
+                  border: none;
+                  cursor: pointer;
+                  padding: 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+                .search-input {
+                  border: none;
+                  outline: none;
+                  font-size: 14px;
+                  flex-grow: 1;
+                  background: transparent;
+                }
+                .options-icon {
+                  width: 24px;
+                  margin-left: 16px;
+                }
+            `}</style>
         </div>
     );
 };

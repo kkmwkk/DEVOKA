@@ -5,6 +5,8 @@ import Main from "./Main"
 import MobileMain from "./MobileMain";
 import {MobileDetailDictionaryPage} from "./components/MobileDetailDictionaryPage";
 import MobileDetailSearchPage from "./components/MobileDetailSearchPage";
+import MobileRecentSearchPage from "./components/MobileRecentSearchPage";
+import MobileEmptySearchPage from "./components/MobileEmptySearchPage";
 
 
 const App = () => {
@@ -22,7 +24,11 @@ const App = () => {
                 {/* MobileDetail 페이지 */}
                 <Route path="/mobileDetail" element={<MobileDetailDictionaryPage />} />
                 {/* MobileDetailSearch 페이지 */}
-                <Route path="/mobileSearch" element={<MobileDetailSearchPage />} />
+                {/*<Route path="/mobileSearch" element={<MobileDetailSearchPage />} />*/}
+                {/* MobileRecentSearchPage 페이지 */}
+                <Route path="/mobileSearch" element={<MobileRecentSearchPage />} />
+                {/* MobileEmptySearchPage 페이지 */}
+                {/*<Route path="/mobileSearch" element={<MobileEmptySearchPage />} />*/}
 
             </Routes>
         </Router>
