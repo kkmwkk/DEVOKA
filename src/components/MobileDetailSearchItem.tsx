@@ -22,12 +22,13 @@ export const MobileDetailSearchItem: React.FC<MobileDetailSearchItemProps> = ({ 
         }
         .rank {
           align-self: stretch;
-          width: 15px;
+          width: 16px;
           margin: auto 0;
           color: #1F1F1F
           font-weight: 600;
         }
         .rank.top-rank {
+          font-weight: 600;
           color: #FF6F1D; /* Top 3 색상 */
         }
         .term {

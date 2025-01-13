@@ -3,7 +3,7 @@ import { MobileDetailSearchItem } from './MobileDetailSearchItem';
 import { MobileDetailSearchListProps } from './mobile/types';
 
 const searchData: MobileDetailSearchListProps = {
-    timestamp: '12.27 16:00:00',
+    timestamp: '16:00 기준',
     items: [
         { rank: 1, term: 'UIUX', isTop3: true },
         { rank: 2, term: '버그', isTop3: true },
@@ -51,12 +51,13 @@ export const MobilePopularSearches: React.FC = () => {
           align-items: start;
         }
         .popular-header {
-          margin-top: 24px;
+          margin-top: 8px;
           border-radius: 16px;
           display: flex;
-          max-width: 327px;
+          max-width: 343px;
+          
           align-items: start;
-          gap: 153px;
+          gap: 184px;
           font-family: Pretendard, sans-serif;
           justify-content: space-between;
         }
@@ -64,8 +65,8 @@ export const MobilePopularSearches: React.FC = () => {
           height:22px;
           width:81px;
           color: #1F1F1F;
-          font-size: 18px;
-          font-weight: 500;
+          font-size: 16px;
+          font-weight: 600;
           line-height: 1;
           letter-spacing: -0.45px;
           margin: 0;

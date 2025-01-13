@@ -34,7 +34,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     },
     popularSearchContainer: {
         flex: 1,
-        padding: '0px 24px 24px 24px',
+        padding: '0px 16px 16px 16px',
     },
 };
 

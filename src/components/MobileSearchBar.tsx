@@ -73,7 +73,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
             <style>{`
                 .header {
                   display: flex;
-                  max-width: 375px;
+                  max-width: 390px;
                   background-color: #fff;
                   gap: 8px;
                   padding: 0;
@@ -110,13 +110,18 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
                 .search-input {
                   border: none;
                   outline: none;
-                  font-size: 14px;
+                  font-size: 16px;
                   flex-grow: 1;
                   background: transparent;
                 }
                 .options-icon {
-                  width: 24px;
-                  margin-left: 16px;
+                    width: 24px;
+                    margin-left: auto; /* 오른쪽으로 정렬 */
+                    box-sizing: border-box;
+                    max-width: calc(100% - 16px); /* 삐져나감 방지 */
+                    object-fit: contain; /* 이미지 왜곡 방지 */
+                    flex-shrink: 0; /* 아이콘 크기 유지 */
+                    -webkit-text-size-adjust: 100%; /* 텍스트 크기 조정 방지 */
                 }
             `}</style>
         </div>

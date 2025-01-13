@@ -49,22 +49,24 @@ const styles: { [key: string]: React.CSSProperties } = {
         textAlign: 'left', // 왼쪽 정렬
     },
     messageTitle: {
-        fontSize: '18px',
-        fontWeight: 'bold',
+        fontSize: '16px',
+        fontWeight: '600',
         color: '#1F1F1F',
-        marginBottom: '8px',
+        marginBottom: '12px',
     },
     messageSubtitle: {
-        fontSize: '14px',
+        fontSize: '16px',
         color: '#767676',
         lineHeight: '1.5',
+        marginTop:'0px',
+        marginBottom:'0px'
     },
     recommendedContainer: {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'flex-start', // 왼쪽 정렬
         gap: '12px',
-        marginTop: '28px',
+        marginTop: '32px',
     },
     keywordItem: {
         backgroundColor: '#F6F6F6',
@@ -73,8 +75,8 @@ const styles: { [key: string]: React.CSSProperties } = {
         fontSize: '14px',
         color: '#1F1F1F',
         textAlign: 'center',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
         cursor: 'pointer',
+        border: '1px solid #EBEBEB', // 테두리 추가
     },
 };
 

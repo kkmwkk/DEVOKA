@@ -24,11 +24,11 @@ const App = () => {
                 {/* MobileDetail 페이지 */}
                 <Route path="/mobileDetail" element={<MobileDetailDictionaryPage />} />
                 {/* MobileDetailSearch 페이지 */}
-                {/*<Route path="/mobileSearch" element={<MobileDetailSearchPage />} />*/}
+                <Route path="/mobileSearch1" element={<MobileDetailSearchPage />} />
                 {/* MobileRecentSearchPage 페이지 */}
-                <Route path="/mobileSearch" element={<MobileRecentSearchPage />} />
+                <Route path="/mobileSearch2" element={<MobileRecentSearchPage />} />
                 {/* MobileEmptySearchPage 페이지 */}
-                {/*<Route path="/mobileSearch" element={<MobileEmptySearchPage />} />*/}
+                <Route path="/mobileSearch3" element={<MobileEmptySearchPage />} />
 
             </Routes>
         </Router>
