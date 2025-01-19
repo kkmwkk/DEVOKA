@@ -1,10 +1,29 @@
 import * as React from 'react';
 
 import { MobileMainCategoryButtonProps } from './mobile/types';
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
-export const MobileMainCategoryButton: React.FC<MobileMainCategoryButtonProps> = ({ label }) => {
+export const MobileMainCategoryButton: React.FC<MobileMainCategoryButtonProps> = ({ label,id }) => {
+    const navigate = useNavigate();
+    const handleOnClickCategoryBtn = async (id: string) => {
+        const url = 'http://localhost:8080/api/terms';
+        try{
+            const response = await axios.get(url, {
+                params: {
+                    page : 0,
+                    size: 30,
+                    categoryId: id
+                },
+            });
+            navigate('/mobileDetail', { state: { results: [response.data.response] , categoryId : id} });
+        }catch (e){
+            console.error('데이터 로드 중 오류:', e);
+        }
+    };
+
     return (
-        <button className="category-button" tabIndex={0}>
+        <button className="category-button" tabIndex={0} onClick={()=>{handleOnClickCategoryBtn(id)}}>
             {label}
             <style>{`
         .category-button {

@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 
 interface MobileSearchBarProps {
     onSearch?: (value: string) => void; // 검색 결과를 상위 컴포넌트로 전달하는 콜백 함수 (선택적)
+    value?: string
 }
 
-const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
-    const [searchValue, setSearchValue] = useState(''); // 검색어 상태 관리
+const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' }) => {
+    const [searchValue, setSearchValue] = useState(value); // 검색어 상태 관리
+    const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
+
+    const handleBackClick = () => {
+        navigate('/'); // 메인 페이지로 이동
+    };
 
     // 검색 실행 함수
     const handleSearch = () => {
         if (searchValue.trim() && onSearch) {
             onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
             setSearchValue(''); // 검색어 초기화
+
         }
     };
 
@@ -34,6 +42,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/1797704ffd031a3fcab260af819c3ff5d494f1f31f507f39402d1a3d98b38808?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
                 alt="Menu icon"
                 className="menu-icon"
+                onClick={handleBackClick} // 클릭 시 메인 페이지로 이동
             />
 
             {/* 검색 입력 */}
@@ -83,15 +92,17 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch }) => {
                   margin: auto 0;
                 }
                 .mobile-search-container {
-                    width: 289px;
+                    width: 100%; /* 고정 너비 대신 유동적 너비 */
+                    max-width: 400px; /* 최대 너비 설정 */
                     height: 48px;
                     display: flex;
                     align-items: center;
                     background-color: #fff;
                     border: 1px solid #ebebeb;
                     border-radius: 8px;
-                    padding: 0 12px;
+                    padding: 0px 10px 0px 10px !important; /* 우선순위 강제 */
                     box-sizing: border-box;
+                    overflow: hidden; /* 레이아웃 깨짐 방지 */
                 }
                 .search-wrapper {
                   display: flex;

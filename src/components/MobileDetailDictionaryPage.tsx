@@ -1,68 +1,120 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // React Router 사용
+import React, {useState} from 'react';
+import {useLocation} from 'react-router-dom'; // React Router 사용
 import { MobileDetailCategory } from './MobileDetailCategory';
 import { MobileDetailDictionaryCard } from './MobileDetailDictionaryCard';
-import { categories, allCategoryItems } from './mobile/data';
-import { MobilePopularSearches } from './MobilePopularSearches';
+import MobileSearchBar from "./MobileSearchBar";
+import {Pagination} from "./Pagination";
+
 
 export const MobileDetailDictionaryPage: React.FC = () => {
-    const [activeCategory, setActiveCategory] = React.useState('전체');
-    const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
+    const location = useLocation(); // 검색화면에서 서칭한 단어의 결과값을 받기 위한 훅
+
+    /**
+     * results : 단어 검색 후, 검색결과
+     * searchValue : 어떤 단어를 검색했는지의 값
+     * categoryId : 메인 페이지에서 클릭한 카테고리의 ID(A0001 ~ A0005)
+     * */
+    const { results, searchValue, categoryId } = location.state || {}; // 전달받은 검색 결과 데이터
+    const [activeCategory, setActiveCategory] = useState(categoryId || 'ALL'); // 초기 활성화된 카테고리
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+    const pageSize = 10; // 한 페이지에 표시할 데이터 수
+
+
+    // 카테고리 데이터
+    const predefinedCategories = [
+        { categoryId: 'ALL', categoryName: '전체'},
+        { categoryId: 'A0001', categoryName: '개발' },
+        { categoryId: 'A0002', categoryName: '경영' },
+        { categoryId: 'A0003', categoryName: '디자인' },
+        { categoryId: 'A0004', categoryName: '마케팅' },
+    ];
+
+    const displayedCategories =
+        activeCategory === 'ALL'
+            ? results
+            : results.filter((category: any) => category.categoryId === activeCategory);
+
+    // 현재 활성화된 카테고리 데이터 페이징 처리
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentData =
+        activeCategory === 'ALL'
+            ? displayedCategories // 전체 카테고리는 각 카테고리에서 4개씩 표시
+            : displayedCategories[0]?.data.slice(startIndex, endIndex) || [];
+
+    const totalPages = Math.ceil((displayedCategories[0]?.data.length || 0) / pageSize);
 
     const handleCategoryChange = (category: string) => {
         setActiveCategory(category);
     };
 
-    const displayedCategories =
-        activeCategory === '전체'
-            ? categories.filter((category) => category !== '전체')
-            : [activeCategory];
-
-    const handleSearchIconClick = () => {
-        navigate('/mobileSearch'); // "/search" 경로로 이동
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 변경 시 스크롤 상단으로 이동
     };
+
+
+    // 더보기 클릭 핸들러
+    const handleMoreClick = (categoryId: string) => {
+        setActiveCategory(categoryId);
+    };
+
 
     return (
         <div className="dictionary-container">
-            <div className="header">
-                <h1>IT용어백과사전</h1>
-                <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/e0942d2330b7121e64ed4d31c4a3c6aad2e6c3799edd5e44eab1732e3610d6ed?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                    alt="search"
-                    className="search-icon"
-                    onClick={handleSearchIconClick} // 클릭 이벤트 추가
-                    style={{ cursor: 'pointer' }} // 클릭 가능한 커서 스타일
-                />
+            <div style={styles.searchBarContainer}>
+                <MobileSearchBar value={searchValue || ''}/>
             </div>
             <main className="main-content">
                 <div className="categories-outer">
                     <div className="categories-inner">
-                        {categories.map((category) => (
+                        {predefinedCategories.map((category: any) => (
                             <MobileDetailCategory
-                                key={category}
-                                label={category}
-                                isActive={activeCategory === category}
-                                onClick={() => handleCategoryChange(category)}
+                                key={category.categoryId}
+                                label={category.categoryName}
+                                isActive={activeCategory === category.categoryId}
+                                onClick={() => handleCategoryChange(category.categoryId)}
                             />
                         ))}
                     </div>
                 </div>
-                {displayedCategories.map((category) => (
-                    <div key={category} className="category-section">
-                        {allCategoryItems[category].slice(0, 4).map((item) => (
-                            <MobileDetailDictionaryCard key={item.title} item={item} />
-                        ))}
-                        <button className="more-button">
-                            <span>{category} 더보기</span>
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                                alt=""
-                                className="arrow-icon"
-                            />
-                        </button>
-                    </div>
-                ))}
-                <MobilePopularSearches />
+                {/* 데이터 렌더링 */}
+                {activeCategory === 'ALL'
+                    ? displayedCategories.map((category: any) => (
+                        <div key={category.categoryId} className="category-section">
+                            {category.data.slice(0, 4).map((item: any) => (
+                                <MobileDetailDictionaryCard key={item.termNo} item={item}/>
+                            ))}
+                            {category.data.length > 4 && (
+                                <button
+                                    className="more-button"
+                                    onClick={() => handleMoreClick(category.categoryId)}
+                                >
+                                    <span>{category.categoryName} 더보기</span>
+                                    <img
+                                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                                        alt=""
+                                        className="arrow-icon"
+                                    />
+                                </button>
+                            )}
+                        </div>
+                    ))
+                    : currentData.map((item: any) => (
+                        <div key={item.termNo} className="category-section">
+                            <MobileDetailDictionaryCard key={item.termNo} item={item}/>
+                        </div>
+                    ))}
+                {/* 페이징 UI */}
+                {/* 페이징 UI */}
+                {activeCategory !== 'ALL' && totalPages > 1 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
+                {/*<MobilePopularSearches/>*/}
             </main>
             <style>{`
         .dictionary-container {
@@ -161,8 +213,73 @@ export const MobileDetailDictionaryPage: React.FC = () => {
           height: 16px; /* 아이콘 높이 */
         }
         
+        .pagination-container {
+          display: flex;
+          justify-content: center; /* 중앙 정렬 */
+          align-items: center;
+          gap: 4px;
+          color: #b5b5b7;
+          white-space: nowrap;
+          text-align: center;
+          letter-spacing: -0.35px;
+          font: 400 14px/1 Pretendard, sans-serif;
+        }
 
+        .pagination-number {
+          background-color: rgba(255, 255, 255, 1);
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+
+        .pagination-number.active {
+          color: #1f1f1f;
+          font-weight: 600;
+        }
+        
+        .pagination-arrow {
+          aspect-ratio: 1;
+          object-fit: contain;
+          object-position: center;
+          width: 32px;
+        }
       `}</style>
         </div>
     );
+};
+
+
+const styles: { [key: string]: React.CSSProperties } = {
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#ffffff',
+        height: '100vh', // 화면 전체를 채우기 위해 사용
+        maxWidth: '375px',
+        margin: '0 auto',
+        boxSizing: 'border-box', // 패딩 계산 방식을 명시적으로 설정
+    },
+    pagination: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '5px',
+        marginTop: '20px',
+    },
+    pageButton: {
+        border: '1px solid #ddd',
+        backgroundColor: '#fff',
+        padding: '5px 10px',
+        cursor: 'pointer',
+    },
+    activePageButton: {
+        backgroundColor: '#FF4500', // 현재 페이지 강조 색상
+        color: '#fff',
+    },
+
+
 };

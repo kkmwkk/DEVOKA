@@ -4,9 +4,9 @@ import { MobileDetailDictionaryCardProps } from './mobile/types';
 export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProps> = ({ item }) => {
     return (
         <div className="dictionary-card">
-            <h3 className="title">{item.title || "Untitled"}</h3>
-            <div className="title-en">{item.titleEn || "No English title available"}</div>
-            <p className="description">{item.description || "No description provided."}</p>
+            <h3 className="title">{item.korName || "Untitled"}</h3>
+            <div className="title-en">{item.engName || "No English title available"}</div>
+            <p className="description">{item.definition || "No description provided."}</p>
             <style>{`
         .dictionary-card {
           width: 343px;
