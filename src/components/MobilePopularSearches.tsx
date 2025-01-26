@@ -74,6 +74,7 @@ export const MobilePopularSearches: React.FC<MobilePopularSearchesProps> = ({onS
           width: 100%;
           flex-direction: column;
           align-items: start;
+
         }
         .popular-header {
             display: flex; /* 플렉스박스 설정 */
@@ -83,6 +84,8 @@ export const MobilePopularSearches: React.FC<MobilePopularSearchesProps> = ({onS
             padding: 0; /* 좌우 패딩 추가 */
             box-sizing: border-box; /* 패딩 포함 크기 계산 */
             margin: 0; /* 외부 여백 제거 */
+            margin-bottom: 16px; /* "인기 검색어"와 리스트 간의 간격 */
+
         }
         
         .popular-title {
