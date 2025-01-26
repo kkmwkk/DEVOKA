@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { MobileDetailDictionaryCardProps } from './mobile/types';
 
-export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProps> = ({ item }) => {
+export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProps> = ({ item, isLast }) => {
     return (
-        <div className="dictionary-card">
+        <div className="dictionary-card" style={{borderBottom: isLast ? 'none' : '1px solid rgba(235, 235, 235, 1)'}}>
             <h3 className="title">{item.korName || "Untitled"}</h3>
             <div className="title-en">{item.engName || "No English title available"}</div>
             <p className="description">{item.definition || "No description provided."}</p>
@@ -19,23 +19,24 @@ export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProp
           padding: 0px;
           box-sizing: border-box;
         }
+        
+
         .title {
           font-size: 18px;
-          color: #1048BE;
+          color: #1F1F1F;
           font-weight: 500;
           margin: 0 0 6px;
           line-height: 1.4;
         }
         .title-en {
-          color: rgba(181, 181, 183, 1);
+          color: #8D8D8D;
           font-size: 14px;
           margin: 0 0 6px;
-          line-height: 1.4;
         }
         .description {
           color: #444449;
           font-size: 16px;
-          line-height: 1.5;
+          line-height: 24px;
           margin: 0;
         }
       `}</style>

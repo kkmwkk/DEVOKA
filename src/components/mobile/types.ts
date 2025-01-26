@@ -1,16 +1,17 @@
 export interface MobileMainCategoryButtonProps {
     label: string;
+    id:string;
 }
 
 export interface MobileMainSearchBarProps {
     placeholder: string;
-    onSearch: (value: string) => void;
+    onSearch?: (value: string) => void;
 }
 
 export interface MobileDetailDictionaryItem {
-    title: string;
-    titleEn: string;
-    description: string;
+    korName: string;
+    engName: string;
+    definition: string;
 }
 
 export interface MobileDetailCategoryProps {
@@ -21,12 +22,14 @@ export interface MobileDetailCategoryProps {
 
 export interface MobileDetailDictionaryCardProps {
     item: MobileDetailDictionaryItem;
+    isLast?: boolean; // 새로운 속성 추가
 }
 
 export interface MobileDetailSearchItemProps {
     rank: number;
     term: string;
     isTop3?: boolean;
+    onSearch? : (value : string) => void;
 }
 
 export interface MobileDetailSearchListProps {

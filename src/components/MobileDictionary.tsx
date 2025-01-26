@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { MobileMainCategoryButton } from './MobileMainCategoryButton';
 import { MobileMainSearchBar } from './MobileMainSearchBar';
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 export const MobileDictionary: React.FC = () => {
@@ -15,8 +14,16 @@ export const MobileDictionary: React.FC = () => {
 
 
     const handleSearchClick = () => {
-        // 1. 페이지 검색 창으로 이동
-        navigate('/mobileSearch1')
+        // 로컬 스토리지에서 최근 검색어 확인
+        const recentSearches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+
+        if (recentSearches.length > 0) {
+            // 최근 검색어가 있는 경우
+            navigate('/mobileSearch2');
+        } else {
+            // 최근 검색어가 없는 경우
+            navigate('/mobileSearch1');
+        }
     };
 
     return (

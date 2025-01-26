@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
-
 interface MobileSearchBarProps {
     onSearch?: (value: string) => void; // 검색 결과를 상위 컴포넌트로 전달하는 콜백 함수 (선택적)
     value?: string
@@ -9,19 +8,40 @@ interface MobileSearchBarProps {
 const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' }) => {
     const [searchValue, setSearchValue] = useState(value); // 검색어 상태 관리
     const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        // 페이지가 렌더링된 후 검색창에 포커스
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, []);
+
 
     const handleBackClick = () => {
         navigate('/'); // 메인 페이지로 이동
     };
 
     // 검색 실행 함수
+    // 1. 아무것도 되지 않았을 때
     const handleSearch = () => {
-        if (searchValue.trim() && onSearch) {
-            onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
-            setSearchValue(''); // 검색어 초기화
+        // 정규식: 영어, 한글, 숫자만 허용
+/*        const validPattern = /^[a-zA-Z가-힣0-9\s]+$/;
 
+        if (!validPattern.test(searchValue)) {
+            alert('영어, 한글, 숫자만 입력 가능합니다.');
+            return;
+        }*/
+
+        const trimValue:string = searchValue.trim()
+        if (trimValue && onSearch) {
+            onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
+        }else if(!trimValue){
+            navigate('/mobileSearch3', { state: { emptySearchValue: '' } }); // 빈 값 명시적으로 전달
         }
     };
+
+
 
     // 입력 필드 변경 시 호출
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +55,12 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
         }
     };
 
+    const handleResetSearchValue = () => {
+        setSearchValue('')
+    }
+
     return (
+        <>
         <div className="header">
             {/* 메뉴 아이콘 */}
             <img
@@ -61,6 +86,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     </button>
                     {/* 검색 입력 필드 */}
                     <input
+                        ref={searchInputRef} // 검색창에 ref 연결
                         type="text"
                         className="search-input"
                         placeholder="검색어를 입력하세요."
@@ -75,6 +101,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/358b043f13d6ea5d59b0b6e3e906dd664c92e06eb9d6bca4fcdf69c118e128b6?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
                     alt="Clear icon"
                     className="options-icon"
+                    onClick={handleResetSearchValue}
                 />
             </div>
 
@@ -88,8 +115,10 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                   padding: 0;
                 }
                 .menu-icon {
-                  width: 28px;
-                  margin: auto 0;
+                    width: 28px;
+                    margin: auto 0;
+                    color: #444449; /* 텍스트나 폰트 아이콘 색상 */
+                    fill: #444449; /* SVG 아이콘 색상을 위한 fill 속성 */
                 }
                 .mobile-search-container {
                     width: 100%; /* 고정 너비 대신 유동적 너비 */
@@ -133,9 +162,14 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     object-fit: contain; /* 이미지 왜곡 방지 */
                     flex-shrink: 0; /* 아이콘 크기 유지 */
                     -webkit-text-size-adjust: 100%; /* 텍스트 크기 조정 방지 */
+                    color: #767676; 
+                    fill: #767676;
                 }
             `}</style>
         </div>
+
+
+        </>
     );
 };
 

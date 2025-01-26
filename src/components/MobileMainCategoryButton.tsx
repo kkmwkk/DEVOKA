@@ -7,12 +7,12 @@ import axios from "axios";
 export const MobileMainCategoryButton: React.FC<MobileMainCategoryButtonProps> = ({ label,id }) => {
     const navigate = useNavigate();
     const handleOnClickCategoryBtn = async (id: string) => {
-        const url = 'http://localhost:8080/api/terms';
+        const url = 'http://192.168.0.7:8080/api/terms';
         try{
             const response = await axios.get(url, {
                 params: {
                     page : 0,
-                    size: 30,
+                    size: 1000000000,
                     categoryId: id
                 },
             });

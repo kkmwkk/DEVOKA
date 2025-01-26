@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetailPage from "./DetailPage";
 import DetailNoSearchPage from "./DetailNoSearchPage";
-import Main from "./Main"
 import MobileMain from "./MobileMain";
 import {MobileDetailDictionaryPage} from "./components/MobileDetailDictionaryPage";
 import MobileDetailSearchPage from "./components/MobileDetailSearchPage";
@@ -24,10 +23,7 @@ const App = () => {
                 {/* MobileDetail 페이지 */}
                 <Route path="/mobileDetail" element={<MobileDetailDictionaryPage />} />
                 {/* MobileDetailSearch 페이지 */}
-                <Route
-                    path="/mobileSearch1"
-                    element={<MobileDetailSearchPage/>}
-                />
+                <Route path="/mobileSearch1" element={<MobileDetailSearchPage/>}/>
                 {/* MobileRecentSearchPage 페이지 */}
                 <Route path="/mobileSearch2" element={<MobileRecentSearchPage />} />
                 {/* MobileEmptySearchPage 페이지 */}

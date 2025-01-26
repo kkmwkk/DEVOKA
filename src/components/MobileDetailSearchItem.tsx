@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { MobileDetailSearchItemProps } from './mobile/types';
 
-export const MobileDetailSearchItem: React.FC<MobileDetailSearchItemProps> = ({ rank, term, isTop3 }) => {
+export const MobileDetailSearchItem: React.FC<MobileDetailSearchItemProps> = ({ rank, term, isTop3, onSearch }) => {
+    const handleOnSearch = (value : string) => {
+        const fnlValue = value || ""
+        if(onSearch){
+            onSearch(fnlValue)
+        }
+    }
+
     return (
         <div className="mobile-detail-search-item">
             <span className={`rank ${isTop3 ? 'top-rank' : ''}`}>{rank}</span>
-            <span className="term">{term}</span>
+            <span className="term" onClick={()=>{handleOnSearch(term)}}>{term}</span>
             <style>{`
         .mobile-detail-search-item {
           border-radius: 16px;
