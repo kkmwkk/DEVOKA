@@ -5,6 +5,7 @@ import { MobileDetailDictionaryCard } from './MobileDetailDictionaryCard';
 import MobileSearchBar from "./MobileSearchBar";
 import {Pagination} from "./Pagination";
 import axios from "axios";
+import apiClient from "../api/api";
 
 
 export const MobileDetailDictionaryPage: React.FC = () => {
@@ -23,12 +24,13 @@ export const MobileDetailDictionaryPage: React.FC = () => {
     const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 훅
     const pageSize = 10; // 한 페이지에 표시할 데이터 수
 
+
     // 검색 기능
     const handleSearch = async (value: string) => {
-        // 정규식: 영어, 한글, 숫자만 허용
-        const validPattern = /^[a-zA-Z가-힣0-9\s]+$/;
+        // 정규식: 특수문자 허용 X
+        const validPattern = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/;
         if (!validPattern.test(value)) {
-            alert('영어, 한글, 숫자만 입력 가능합니다.');
+            alert('특수문자는 검색이 불가합니다.');
             return;
         }
         // 최근 검색어 저장 로직
@@ -45,7 +47,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
         if (!value.trim()) return; // 빈 값 처리
 
         try {
-            const response = await axios.get("http://192.168.0.7:8080/api/terms/search", {
+            const response = await apiClient.get("/api/terms/search", {
                 params: { keyword: value },
             });
             if(response.data.response.length > 0){
@@ -53,7 +55,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 setActiveCategory('ALL'); // 카테고리 초기화
                 setCurrentPage(1); // 페이지 초기화
             }else{
-                navigate('/mobileSearch3', {state: {emptySearchValue: value}})
+                navigate('/search/empty', {state: {emptySearchValue: value}})
             }
 
         } catch (error) {
@@ -96,9 +98,8 @@ export const MobileDetailDictionaryPage: React.FC = () => {
         if(initialResults && Array.isArray(initialResults) && initialResults.length > 0 && searchValue === ''){
             // initialResults 가 존재한다면 ? 카테고리 클릭으로 들어왔다는 것.
             if(categoryId !== "ALL"){
-                const url = 'http://192.168.0.7:8080/api/terms';
                 try{
-                    const response = await axios.get(url, {
+                    const response = await apiClient.get('/api/terms', {
                         params: {
                             page : 0,
                             size: 10000000,
@@ -116,9 +117,8 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                     console.error('데이터 로드 중 오류:', e);
                 }
             }else{
-                const url = "http://localhost:8080/api/terms/all";
                 try{
-                    const response = await axios.get(url, {
+                    const response = await apiClient.get('/api/terms/all', {
                         params: {
                             page : 0,
                             size: 4,
@@ -150,9 +150,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
 
     return (
         <div className="dictionary-container">
-            <div style={styles.searchBarContainer}>
-                <MobileSearchBar value={searchValue || ''} onSearch={handleSearch}/>
-            </div>
+            <MobileSearchBar value={searchValue || ''} onSearch={handleSearch}/>
             <main className="main-content">
                 <div className="categories-outer">
                     <div className="categories-inner">
@@ -174,7 +172,9 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                                     <MobileDetailDictionaryCard
                                         key={item.termNo}
                                         item={item}
-                                        isLast={index === category.data.length - 1}
+                                        isLast={index === 3}
+                                        searchKeyword = {searchValue}
+
                                     />
                                 ))}
                                 {category.data.length > 0 && (
@@ -195,7 +195,12 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                     )
                     : currentData.map((item: any, index: number) => (
                         <div key={item.termNo} className="category-section">
-                            <MobileDetailDictionaryCard key={item.termNo} item={item} isLast={index === currentData.length - 1}/>
+                            <MobileDetailDictionaryCard
+                                key={item.termNo}
+                                item={item}
+                                isLast={index === currentData.length - 1}
+                                searchKeyword = {searchValue}
+                            />
                         </div>
                     ))}
                 {/* 페이징 UI */}
@@ -210,138 +215,138 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 {/*<MobilePopularSearches/>*/}
             </main>
             <style>{`
-        .dictionary-container {
-          background-color: rgba(246, 248, 250, 1);
-          display: flex;
-          max-width: 375px;
-          width: 100%;
-          flex-direction: column;
-          overflow-y: auto;
-          margin: 0 auto;
-        }
-        .header {
-          background-color: #fff;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          height: 62px;
-          max-width: 375px;
-          width: 100%;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .header h1 {
-          font: 600 26px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
-          margin: 0;
-        }
-        .search-icon {
-          width: 28px;
-          height: 28px;
-          cursor: pointer;
-        }
-        .main-content {
-          background-color: #fff;
-          padding: 0 16px 16px;
-          box-sizing: border-box;
-        }
-        .categories-outer {
-          width: 343px;
-          height: 52px;
-          margin: 10px auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: rgba(246, 248, 250, 1);
-          border-radius: 8px;
-        }
-        .categories-inner {
-          width: 330px;
-          height: 40px;
-          display: flex;
-          gap: 0;
-        }
-        .category-section .dictionary-card {
-          width: 343px;
-          min-height: 156px;
-          border-bottom: 1px solid rgba(235, 235, 235, 1);
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: flex-start;
-          padding: 24px 0px 24px 0px;
-          box-sizing: border-box;
-        }
+                .dictionary-container {
+                  background-color: rgba(246, 248, 250, 1);
+                  display: flex;
+                  max-width: 375px;
+                  width: 100%;
+                  flex-direction: column;
+                  overflow-y: auto;
+                  height: 100%;
+                  -webkit-overflow-scrolling: touch; /* iOS에서 스크롤 부드럽게 */
+                  margin: 0 auto;
+                }
+                .header {
+                  background-color: #fff;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  height: 62px;
+                  max-width: 375px;
+                  width: 100%;
+                  padding: 0 16px;
+                  box-sizing: border-box;
+                }
+                .header h1 {
+                  font: 600 26px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
+                  margin: 0;
+                }
+                .search-icon {
+                  cursor: pointer;
+                }
+                .main-content {
+                  background-color: #fff;
+                  padding: 0 16px 16px;
+                  box-sizing: border-box;
+                }
+                .categories-outer {
+                  width: 343px;
+                  height: 52px;
+                  margin: 10px auto;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  background-color: rgba(246, 248, 250, 1);
+                  border-radius: 8px;
+                }
+                .categories-inner {
+                  width: 330px;
+                  height: 40px;
+                  display: flex;
+                  gap: 0;
+                }
+                .category-section .dictionary-card {
+                  width: 343px;
+                  min-height: 156px;
+                  border-bottom: 1px solid rgba(235, 235, 235, 1);
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-start;
+                  align-items: flex-start;
+                  padding: 24px 0px 24px 0px;
+                  box-sizing: border-box;
+                }
+                
+               .category-section .dictionary-card:last-of-type {
+                  border-bottom: none; /!* 마지막 dictionary-card의 border-bottom 제거 *!/
+                }
         
-       .category-section .dictionary-card:last-of-type {
-          border-bottom: none; /!* 마지막 dictionary-card의 border-bottom 제거 *!/
-        }
-
-        .more-button {
-          width: 343px; /* 버튼 전체 너비 */
-          height: 48px; /* 버튼 전체 높이 */
-          display: flex;
-          align-items: center; /* 세로 중앙 정렬 */
-          justify-content: center; /* 가로 중앙 정렬 */ㄴ
-          gap: 6px; /* 아이콘과 텍스트 간격 설정 */
-          border: 1px solid rgba(235, 235, 235, 1); /* 테두리 */
-          border-radius: 8px; /* 모서리 둥글게 */
-          padding: 0; /* 내부 여백 제거 */
-          background: none; /* 배경 없음 */
-          cursor: pointer; /* 클릭 커서 */
-          color: #000; /* 글자 색상 */
-          text-decoration: none; /* 링크 스타일 제거 */
-          box-sizing: border-box; /* 크기 계산 포함 */
-          margin-bottom: 4px;
-        }
+                .more-button {
+                  width: 343px; /* 버튼 전체 너비 */
+                  height: 48px; /* 버튼 전체 높이 */
+                  display: flex;
+                  align-items: center; /* 세로 중앙 정렬 */
+                  justify-content: center; /* 가로 중앙 정렬 */ㄴ
+                  gap: 6px; /* 아이콘과 텍스트 간격 설정 */
+                  border: 1px solid rgba(235, 235, 235, 1); /* 테두리 */
+                  border-radius: 8px; /* 모서리 둥글게 */
+                  padding: 0; /* 내부 여백 제거 */
+                  background: none; /* 배경 없음 */
+                  cursor: pointer; /* 클릭 커서 */
+                  color: #000; /* 글자 색상 */
+                  text-decoration: none; /* 링크 스타일 제거 */
+                  box-sizing: border-box; /* 크기 계산 포함 */
+                  margin-bottom: 4px;
+                }
+                
+                .more-button span {
+                  font-size: 16px; /* 폰트 크기 */
+                  font-weight: 400; /* 기본 굵기 */
+                  line-height: 1; /* 텍스트 높이 */
+                  text-align: center; /* 텍스트 중앙 정렬 */
+                  white-space: nowrap; /* 텍스트를 한 줄로 유지 */
+                }
+                
+                .arrow-icon {
+                  width: 16px; /* 아이콘 너비 */
+                  height: 16px; /* 아이콘 높이 */
+                }
+                
+                .pagination-container {
+                  display: flex;
+                  justify-content: center; /* 중앙 정렬 */
+                  align-items: center;
+                  gap: 4px;
+                  color: #b5b5b7;
+                  white-space: nowrap;
+                  text-align: center;
+                  letter-spacing: -0.35px;
+                  font: 400 14px/1 Pretendard, sans-serif;
+                }
         
-        .more-button span {
-          font-size: 16px; /* 폰트 크기 */
-          font-weight: 400; /* 기본 굵기 */
-          line-height: 1; /* 텍스트 높이 */
-          text-align: center; /* 텍스트 중앙 정렬 */
-          white-space: nowrap; /* 텍스트를 한 줄로 유지 */
-        }
+                .pagination-number {
+                  background-color: rgba(255, 255, 255, 1);
+                  border-radius: 50%;
+                  width: 37px;
+                  height: 37px;
+                  padding: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                }
         
-        .arrow-icon {
-          width: 16px; /* 아이콘 너비 */
-          height: 16px; /* 아이콘 높이 */
-        }
-        
-        .pagination-container {
-          display: flex;
-          justify-content: center; /* 중앙 정렬 */
-          align-items: center;
-          gap: 4px;
-          color: #b5b5b7;
-          white-space: nowrap;
-          text-align: center;
-          letter-spacing: -0.35px;
-          font: 400 14px/1 Pretendard, sans-serif;
-        }
-
-        .pagination-number {
-          background-color: rgba(255, 255, 255, 1);
-          border-radius: 50%;
-          width: 32px;
-          height: 32px;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-
-        .pagination-number.active {
-          color: #1f1f1f;
-          font-weight: 600;
-        }
-        
-        .pagination-arrow {
-          aspect-ratio: 1;
-          object-fit: contain;
-          object-position: center;
-          width: 32px;
-        }
+                .pagination-number.active {
+                  color: #1f1f1f;
+                  font-weight: 600;
+                }
+                
+                .pagination-arrow {
+                  aspect-ratio: 1;
+                  object-fit: contain;
+                  object-position: center;
+                  width: 37px;
+                }
       `}</style>
         </div>
     );

@@ -3,13 +3,13 @@ import * as React from 'react';
 import { MobileMainCategoryButtonProps } from './mobile/types';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import apiClient from "../api/api";
 
 export const MobileMainCategoryButton: React.FC<MobileMainCategoryButtonProps> = ({ label,id }) => {
     const navigate = useNavigate();
     const handleOnClickCategoryBtn = async (id: string) => {
-        const url = 'http://192.168.0.7:8080/api/terms';
         try{
-            const response = await axios.get(url, {
+            const response = await apiClient.get('/api/terms', {
                 params: {
                     page : 0,
                     size: 1000000000,

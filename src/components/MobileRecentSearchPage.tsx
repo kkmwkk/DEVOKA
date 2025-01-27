@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MobileSearchBar from './MobileSearchBar';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import apiClient from "../api/api"
 
 interface RecentSearchItem {
     id: number;
@@ -19,11 +20,10 @@ const MobileRecentSearchPage: React.FC = () => {
     }, []);
 
     const handleSearch = async (value: string) => {
-        // 정규식: 영어, 한글, 숫자만 허용
-        const validPattern = /^[a-zA-Z가-힣0-9\s]+$/;
-
+        // 정규식: 특수문자 허용 X
+        const validPattern = /^[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/;
         if (!validPattern.test(value)) {
-            alert('영어, 한글, 숫자만 입력 가능합니다.');
+            alert('특수문자는 검색이 불가합니다.');
             return;
         }
 
@@ -41,18 +41,17 @@ const MobileRecentSearchPage: React.FC = () => {
 
         setRecentSearches(updatedSearches);
         // 기존 API 호출 로직
-        const url = 'http://192.168.0.7:8080/api/terms/search';
         try {
-            const response = await axios.get(url, { params: { keyword: value } });
-            if(response.data.response.length > 0){
+            const response = await apiClient.get('/api/terms/search', { params: { keyword: value } }); // URL과 params 전달
+            if (response.data.response.length > 0) {
                 navigate('/mobileDetail', { state: { results: response.data.response, searchValue: value } });
-            }else{
-                navigate('/mobileSearch3', {state: {emptySearchValue: value}})
+            } else {
+                navigate('/search/empty', { state: { emptySearchValue: value } });
             }
-
         } catch (e) {
             console.error('검색 중 에러가 발생: ', e);
         }
+
     };
 
     const handleRecentSearchClick = (label: string) => {

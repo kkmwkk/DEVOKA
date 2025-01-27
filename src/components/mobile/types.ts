@@ -23,6 +23,7 @@ export interface MobileDetailCategoryProps {
 export interface MobileDetailDictionaryCardProps {
     item: MobileDetailDictionaryItem;
     isLast?: boolean; // 새로운 속성 추가
+    searchKeyword?: string // 검색 키워드 추가
 }
 
 export interface MobileDetailSearchItemProps {

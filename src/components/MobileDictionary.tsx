@@ -19,10 +19,10 @@ export const MobileDictionary: React.FC = () => {
 
         if (recentSearches.length > 0) {
             // 최근 검색어가 있는 경우
-            navigate('/mobileSearch2');
+            navigate('/search/recent');
         } else {
             // 최근 검색어가 없는 경우
-            navigate('/mobileSearch1');
+            navigate('/search/popular');
         }
     };
 

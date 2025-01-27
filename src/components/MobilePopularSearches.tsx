@@ -2,6 +2,8 @@ import * as React from 'react';
 import { MobileDetailSearchItem } from './MobileDetailSearchItem';
 import {useEffect, useState} from "react";
 import axios from "axios";
+import apiClient from "../api/api"
+
 
 interface MobilePopularSearchesProps {
     onSearch?: (value: string) => void; // 반환값이 void인 함수
@@ -14,7 +16,8 @@ export const MobilePopularSearches: React.FC<MobilePopularSearchesProps> = ({onS
     useEffect(() => {
         const fetchRecommendWordsData = async () => {
             try{
-                const response = await axios.get('http://192.168.0.7:8080/api/terms/popular');
+                // /api/terms/popular
+                const response = await apiClient.get('/api/terms/popular')
                 setTimeStamp(response.data.response.dateTime || ''); // 날짜 데이터 설정
                 const tmpData = response.data.response.rankDataList
                 const fnlData: any[] = [];
@@ -97,7 +100,7 @@ export const MobilePopularSearches: React.FC<MobilePopularSearchesProps> = ({onS
         }
         
         .timestamp {
-            color: #767676;
+            color: #8D8D8D;
             font-size: 14px;
             font-weight: 400;
             white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */

@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ReactComponent as ResetButtonIcon } from '../assets/reset-button.svg';
+import { ReactComponent as SearchButtonIcon } from '../assets/search-buttton.svg';
+
 import {useNavigate} from "react-router-dom";
 interface MobileSearchBarProps {
     onSearch?: (value: string) => void; // 검색 결과를 상위 컴포넌트로 전달하는 콜백 함수 (선택적)
@@ -37,7 +40,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
         if (trimValue && onSearch) {
             onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
         }else if(!trimValue){
-            navigate('/mobileSearch3', { state: { emptySearchValue: '' } }); // 빈 값 명시적으로 전달
+            navigate('/search/empty', { state: { emptySearchValue: '' } }); // 빈 값 명시적으로 전달
         }
     };
 
@@ -74,16 +77,10 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
             <div className="mobile-search-container">
                 <div className="search-wrapper">
                     {/* 돋보기 아이콘 버튼 */}
-                    <button
+                    <SearchButtonIcon
                         className="search-icon"
                         onClick={handleSearch} // 돋보기 클릭 시 검색 실행
-                    >
-                        <img
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/a85e20ee8e286f8e52bbd8e1ee5cafe73ccfa9449f1201a9b3cec027d81de3b9?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                            alt="Search icon"
-                            style={{ width: '28px', height: '28px' }}
-                        />
-                    </button>
+                    />
                     {/* 검색 입력 필드 */}
                     <input
                         ref={searchInputRef} // 검색창에 ref 연결
@@ -97,9 +94,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     />
                 </div>
                 {/* Clear 아이콘 */}
-                <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/358b043f13d6ea5d59b0b6e3e906dd664c92e06eb9d6bca4fcdf69c118e128b6?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                    alt="Clear icon"
+                <ResetButtonIcon
                     className="options-icon"
                     onClick={handleResetSearchValue}
                 />
@@ -125,15 +120,20 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     max-width: 400px; /* 최대 너비 설정 */
                     height: 48px;
                     display: flex;
+                    align-items: center; /* 아이템 세로 가운데 정렬 */
                     align-items: center;
+                    /*                    
                     background-color: #fff;
-                    border: 1px solid #ebebeb;
+                    border: 1px solid #FF6F1D;
+                    */
+                    background-color: #f6f8fa;
                     border-radius: 8px;
                     padding: 0px 10px 0px 10px !important; /* 우선순위 강제 */
                     box-sizing: border-box;
                     overflow: hidden; /* 레이아웃 깨짐 방지 */
                 }
                 .search-wrapper {
+                  align-items: center; /* 추가적으로 가운데 정렬 */
                   display: flex;
                   gap: 6px;
                   flex-grow: 1;
@@ -146,6 +146,8 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  vertical-align: middle; /* SVG를 가운데로 정렬 */
+
                 }
                 .search-input {
                   border: none;

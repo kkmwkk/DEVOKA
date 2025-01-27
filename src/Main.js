@@ -24,16 +24,16 @@ const Main = () => {
         navigate('/mobileDetail')
     }
 
-    const mobileSearch1 = () => {
-        navigate('/mobileSearch1')
+    const searchPopular = () => {
+        navigate('/search/popular')
     }
 
-    const mobileSearch2 = () => {
-        navigate('/mobileSearch2')
+    const searchRecent = () => {
+        navigate('/search/recent')
     }
 
-    const mobileSearch3 = () => {
-        navigate('/mobileSearch3')
+    const searchEmpty = () => {
+        navigate('/search/empty')
     }
 
     return (
@@ -43,9 +43,9 @@ const Main = () => {
             <Button onClick={handleGoToMobileMainPage}></Button>
             <Button onClick={handleGoToMobileDetailPage}></Button>
 
-            <Button onClick={mobileSearch1}></Button>
-            <Button onClick={mobileSearch2}></Button>
-            <Button onClick={mobileSearch3}></Button>
+            <Button onClick={searchPopular}></Button>
+            <Button onClick={searchRecent}></Button>
+            <Button onClick={searchEmpty}></Button>
             <Dictionary></Dictionary>
         </>
     );
