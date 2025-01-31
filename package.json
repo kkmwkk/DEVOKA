@@ -2,7 +2,7 @@
   "name": "devoka",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://52.79.98.68:8080",
+  "proxy": "https://aoxx.co.kr",
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^5.17.0",
