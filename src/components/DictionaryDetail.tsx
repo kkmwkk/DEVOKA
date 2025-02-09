@@ -141,7 +141,7 @@ export const DictionaryDetail: React.FC = () => {
 
                 .dictionary-header {
                     background-color: #fff;
-                    padding: 16px 7%;
+                    padding: 16px 16.8423%;
                     box-sizing: border-box;
                     position: sticky;
                     top: 0;
@@ -156,7 +156,8 @@ export const DictionaryDetail: React.FC = () => {
 
                 .header-title {
                     color: #1f1f1f;
-                    font: 600 20px/1.4 Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
+                    font: 600 24px/1.4 Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
+                    font-weight: 600;
                     letter-spacing: -0.5px;
                     margin: 0;
                 }
@@ -168,7 +169,7 @@ export const DictionaryDetail: React.FC = () => {
                     border-radius: 8px;
                     padding: 8px 16px;
                     background-color: #fff;
-                    max-width: 425px;
+                    max-width: 680px; /* 서칭바 길이 */
                     width: 100%;
                     position: relative;
                     box-sizing: border-box;
@@ -259,13 +260,13 @@ export const DictionaryDetail: React.FC = () => {
                 }
 
                 .dictionary-main {
-                    padding: 32px 5%;
+                    padding: 32px 16.8422%;
                     margin-top: 16px;
                 }
 
                 .content-wrapper {
                     display: flex;
-                    gap: 20px;
+                    gap: 80px;
                 }
 
                 .dictionary-content {
@@ -286,6 +287,7 @@ export const DictionaryDetail: React.FC = () => {
                         width: 100%;
                     }
                 }
+                        
             `}</style>
         </div>
     );

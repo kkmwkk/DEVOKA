@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,

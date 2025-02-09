@@ -2,41 +2,48 @@ import * as React from 'react';
 import { DictionaryItem } from '../type';
 
 interface DictionaryListProps {
-  items: DictionaryItem[];
-  category: string;
+    items: DictionaryItem[];
+    category: string;
 }
 
 export const DictionaryDetailList: React.FC<DictionaryListProps> = ({ items, category }) => {
-  const filteredItems = category === '전체'
-    ? items
-    : items.filter(item => item.category === category);
+    const filteredItems = category === '전체'
+        ? items
+        : items.filter(item => item.category === category);
 
-  return (
-    <section className="dictionary-section">
-      <h2 className="category-title">{category}</h2>
-      <div className="dictionary-list">
-        {filteredItems.map((item, index) => (
-          <article key={index} className="dictionary-item">
-            <h3 className="item-title">{item.title}</h3>
-            <p className="item-english">{item.englishTitle}</p>
-            <p className="item-description">{item.description}</p>
-          </article>
-        ))}
-      </div>
+    return (
+        <section className="dictionary-detail-section">
+            <h2 className="category-title">{category}</h2>
+            <div className="dictionary-list">
+                {filteredItems.map((item, index) => (
+                    <article key={index} className="dictionary-item">
+                        <h3 className="item-title">{item.title}</h3>
+                        <p className="item-english">{item.englishTitle}</p>
+                        <p className="item-description">{item.description}</p>
+                    </article>
+                ))}
+            </div>
 
-        <div className="more-wrapper">
-          <button className="more-button">
-              {`${category}더보기`}
-            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60" alt="" className="more-icon" />
-          </button>
-        </div>
+            <div className="more-wrapper">
+                <button className="more-button">
+                    {`${category} 더보기`}
+                    <img
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                        alt=""
+                        className="more-icon"
+                    />
+                </button>
+            </div>
 
-      <style>{`
-        .dictionary-section {
+            <style>{`
+        .dictionary-detail-section {
+          max-width: 838px; /* 너비 고정 */
+          margin: 0 auto; /* 중앙 정렬 */
           border-radius: 16px;
           background-color: #fff;
           padding: 32px;
           border: 1px solid #ebebeb;
+          box-sizing: border-box;
         }
         .category-title {
           color: #1f1f1f;
@@ -79,7 +86,7 @@ export const DictionaryDetailList: React.FC<DictionaryListProps> = ({ items, cat
         }
         .more-button {
           display: inline-flex;
-          align-items: right;
+          align-items: center;
           gap: 6px;
           background-color: #fff;
           border: 1px solid #ebebeb;
@@ -95,11 +102,12 @@ export const DictionaryDetailList: React.FC<DictionaryListProps> = ({ items, cat
           height: 12px;
         }
         @media (max-width: 991px) {
-          .dictionary-section {
-            padding: 0 20px;
+          .dictionary-detail-section {
+            max-width: 100%; /* 작은 화면에서 너비를 100%로 조정 */
+            padding: 16px; /* 패딩 조정 */
           }
         }
       `}</style>
-    </section>
-  );
+        </section>
+    );
 };

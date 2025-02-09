@@ -25,7 +25,7 @@ export const CategoryDetailList: React.FC<CategoryListProps> = ({ selectedCatego
             <style>{`
         .category-nav {
           background-color: #fff;
-          padding: 11px 70px 11px 7%;
+          padding: 11px 16.8421%;
           width: 100%;
         }
         .category-list {
