@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    height: 100vh;
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.messageContainer {
+    margin-top: 26px;
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+.messageTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1F1F1F;
+    margin-bottom: 12px;
+}
+
+.messageSubtitle {
+    font-size: 16px;
+    color: #767676;
+    line-height: 1.5;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.recommendedContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.keywordItem {
+    background-color: #F6F6F6;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #1F1F1F;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #EBEBEB; /* 테두리 추가 */
+}

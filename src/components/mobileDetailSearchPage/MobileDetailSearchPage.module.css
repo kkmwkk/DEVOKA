@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    height: 100vh; /* 화면 전체를 채우기 위해 사용 */
+    max-width: 390px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box; /* 패딩 계산 방식 명시 */
+}
+
+.searchBarContainer {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    padding: 16px 24px;
+}
+
+.popularSearchContainer {
+    margin-top: 26px;
+    flex: 1;
+}

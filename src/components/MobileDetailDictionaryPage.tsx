@@ -167,7 +167,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                 {/* 데이터 렌더링 */}
                 {activeCategory === 'ALL' && displayedCategories.length > 0 ? (
                         displayedCategories.map((category: any) => (
-                            <div key={category.categoryId} className="category-section">
+                            <div key={category.categoryId}     className={`category-section ${activeCategory === 'ALL' ? 'all-category' : ''}`}>
                                 {category.data.slice(0,4).map((item: any, index: number) => (
                                     <MobileDetailDictionaryCard
                                         key={item.termNo}
@@ -178,17 +178,21 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                                     />
                                 ))}
                                 {category.data.length > 0 && (
-                                    <button
-                                        className="more-button"
-                                        onClick={() => handleMoreClick(category.categoryId)}
-                                    >
-                                        <span>{category.categoryName} 더보기</span>
-                                        <img
-                                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
-                                            alt=""
-                                            className="arrow-icon"
-                                        />
-                                    </button>
+                                    <div className="more-button-wrapper">
+                                        <div className="divider"></div> {/* 위쪽 구분선 */}
+                                            <button
+                                                className="more-button"
+                                                onClick={() => handleMoreClick(category.categoryId)}
+                                            >
+                                                <span>{category.categoryName} 더보기</span>
+                                                <img
+                                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb167a14231989934acb5333885386e7d98b1b768ea1e7c68e9cbe0ebe4f8cfd?placeholderIfAbsent=true&apiKey=a7fa475a1710478787384e06fe692f60"
+                                                    alt=""
+                                                    className="arrow-icon"
+                                                />
+                                            </button>
+                                        <div className="divider"></div> {/* 아래쪽 구분선 */}
+                                    </div>
                                 )}
                             </div>
                         ))
@@ -205,23 +209,69 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                     ))}
                 {/* 페이징 UI */}
                 {activeCategory !== 'ALL' && totalPages > 1 && (
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                        groupSize={5} // 한 번에 표시할 페이지 수
-                    />
+                    <div className="pagination-wrapper">
+                        <div className="pagination-divider"></div> {/* 페이징 버튼 위 구분선 */}
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            groupSize={5}
+                        />
+                    </div>
                 )}
-                {/*<MobilePopularSearches/>*/}
+
+
             </main>
             <style>{`
+                html, body {
+                  width: 100%;
+                  height: 100%;
+                  margin: 0;
+                  padding: 0;
+                  overflow-x: hidden;
+                }          
+
+                .pagination-wrapper {
+                    position: relative;
+                    margin-top: 22px; /* 기존 24px → 22px로 조정 (2px 올림) */
+                }
+                
+                .pagination-wrapper .pagination-divider {
+                    position: absolute;
+                    top: -22px; /* 기존 -18px → -20px로 조정 (2px 더 위로) */
+                    left: 0;
+                    width: calc(100% + 32px); /* 좌우 패딩(16px * 2) 무시 */
+                    height: 8px;
+                    background-color: rgba(246, 248, 250, 1);
+                    transform: translateX(-16px); /* 패딩 제거 */
+                }
+
+                .all-category .more-button-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px; /* 버튼과 구분선 사이 간격 */
+                    width: 100%;
+                    position: relative; /* 부모 기준 위치 조정 */
+                }
+                
+                .all-category .divider {
+                    width: 100vw; /* 좌우 패딩 제거 효과 */
+                    height: 8px;
+                    background-color: rgba(246, 248, 250, 1);
+                    margin: 0 -16px; /* 왼쪽 + 오른쪽 모두 16px 확장 */
+                }
+
                 .dictionary-container {
                   background-color: rgba(246, 248, 250, 1);
                   display: flex;
                   max-width: 375px;
                   width: 100%;
+                  min-width: 100vw;
                   flex-direction: column;
                   overflow-y: auto;
+                    margin: 0 auto; /* 중앙 정렬 */
+
                   height: 100%;
                   -webkit-overflow-scrolling: touch; /* iOS에서 스크롤 부드럽게 */
                   margin: 0 auto;
@@ -232,11 +282,14 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                   justify-content: space-between;
                   align-items: center;
                   height: 62px;
-                  max-width: 375px;
+                  max-width: 400px; /* main-content와 동일한 크기로 맞춤 */
                   width: 100%;
                   padding: 0 16px;
                   box-sizing: border-box;
+                  margin: 0 auto; /* 중앙 정렬 */
                 }
+
+
                 .header h1 {
                   font: 600 26px Pretendard, -apple-system, Roboto, Helvetica, sans-serif;
                   margin: 0;
@@ -245,10 +298,15 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                   cursor: pointer;
                 }
                 .main-content {
+                  max-width: 400px; /* 최대 크기 제한 */
+                  width: 100%; /* 부모 요소를 꽉 채움 */
                   background-color: #fff;
                   padding: 0 16px 16px;
+                  margin: 0 auto; /* 중앙 정렬 */
                   box-sizing: border-box;
+                  min-height: 100vh; /* 뷰포트 높이만큼 최소 크기 유지 */
                 }
+
                 .categories-outer {
                   width: 343px;
                   height: 52px;
@@ -277,9 +335,7 @@ export const MobileDetailDictionaryPage: React.FC = () => {
                   box-sizing: border-box;
                 }
                 
-               .category-section .dictionary-card:last-of-type {
-                  border-bottom: none; /!* 마지막 dictionary-card의 border-bottom 제거 *!/
-                }
+
         
                 .more-button {
                   width: 343px; /* 버튼 전체 너비 */

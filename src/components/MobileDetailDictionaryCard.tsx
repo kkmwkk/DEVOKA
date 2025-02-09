@@ -42,7 +42,7 @@ export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProp
             <style>{`
                 .dictionary-card {
                     width: 343px;
-                    min-height: 156px;
+                    min-height: 156px;  
                     border-bottom: 1px solid rgba(235, 235, 235, 1);
                     display: flex;
                     flex-direction: column;
@@ -50,7 +50,9 @@ export const MobileDetailDictionaryCard: React.FC<MobileDetailDictionaryCardProp
                     align-items: flex-start;
                     padding: 0px;
                     box-sizing: border-box;
+                    margin: 0 auto; /* 중앙 정렬 */
                 }
+
                 .title {
                     font-size: 18px;
                     color: #1F1F1F;

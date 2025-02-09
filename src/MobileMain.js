@@ -1,8 +1,6 @@
-import {MobileDictionary} from "./components/MobileDictionary";
+import {MobileDictionary} from "./components/mobileDictionary/MobileDictionary";
 
 const MobileMain = () => {
-
-    // const navigate = useNavigate();
     return (
         <>
             <MobileDictionary></MobileDictionary>

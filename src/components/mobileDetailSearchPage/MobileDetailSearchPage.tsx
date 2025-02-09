@@ -1,8 +1,9 @@
 import React from 'react';
-import MobileSearchBar from './MobileSearchBar';
-import { MobilePopularSearches } from './MobilePopularSearches';
+import MobileSearchBar from '../MobileSearchBar';
+import { MobilePopularSearches } from '../MobilePopularSearches';
 import {useNavigate} from "react-router-dom";
-import apiClient from "../api/api"
+import apiClient from "../../api/api"
+import styles from "./MobileDetailSearchPage.module.css"
 
 interface RecentSearchItem {
     id: number;
@@ -42,37 +43,15 @@ const MobileDetailSearchPage: React.FC<MobileDetailSearchPageProps> = () => {
 
 
     return (
-        <div style={styles.container}>
+        <div className={styles.container}>
             <MobileSearchBar onSearch={handleSearch}/>
             {/* Popular Searches Component */}
-            <div style={styles.popularSearchContainer}>
+            <div className={styles.popularSearchContainer}>
                 <MobilePopularSearches onSearch={handleSearch}/>
             </div>
         </div>
     );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#ffffff',
-        height: '100vh', // 화면 전체를 채우기 위해 사용
-        maxWidth: '390px',
-        margin: '0 auto',
-        padding: '16px',
-        boxSizing: 'border-box', // 패딩 계산 방식을 명시적으로 설정
-    },
-    searchBarContainer: {
-        display: 'flex',
-        justifyContent: 'center', // 가운데 정렬
-        padding: '16px 24px',
-
-    },
-    popularSearchContainer: {
-        marginTop: '26px',
-        flex: 1,
-    },
-};
 
 export default MobileDetailSearchPage;

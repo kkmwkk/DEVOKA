@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import MobileSearchBar from './MobileSearchBar';
-import axios from "axios";
+import MobileSearchBar from '../MobileSearchBar';
 import {useLocation, useNavigate} from "react-router-dom";
-import apiClient from "../api/api";
+import apiClient from "../../api/api";
+import styles from "./EmptySearchPage.module.css"
 
 const EmptySearchPage: React.FC = () => {
     const location = useLocation()
@@ -72,38 +72,26 @@ const EmptySearchPage: React.FC = () => {
 
 
     return (
-        <div style={styles.container}>
+        <div className={styles.container}>  {/* ✅ className으로 변경 */}
             {/* 상단 검색바 */}
             <MobileSearchBar onSearch={handleSearch}/>
 
-            <div style={styles.messageContainer}>
+            <div className={styles.messageContainer}>  {/* ✅ className 적용 */}
                 {searchValue ? (
                     <>
-                        <h2
-                            style={
-                                {
-                                    ...styles.messageTitle
-                                    , marginTop: 0, // margin-top 제거
-                                }
-                            }>
+                        <h2 className={styles.messageTitle} style={{marginTop: 0}}>  {/* ✅ className + style 병행 */}
                             '{searchValue}'에 대한 결과를 찾을 수 없어요.
                         </h2>
-                        <p style={styles.messageSubtitle}>
+                        <p className={styles.messageSubtitle}>
                             무엇을 검색할지 고민되신다면, IT용어백과사전 크루가 새로운 용어를 추천드릴게요.
                         </p>
                     </>
                 ) : (
                     <>
-                        <h2
-                            style={
-                                {
-                                    ...styles.messageTitle
-                                    , marginTop: 0, // margin-top 제거
-                                }
-                        } >
+                        <h2 className={styles.messageTitle} style={{marginTop: 0}}>  {/* ✅ className + style 병행 */}
                             검색어를 입력하지 않았어요.
                         </h2>
-                        <p style={styles.messageSubtitle}>
+                        <p className={styles.messageSubtitle}>
                             무엇을 검색할지 고민되신다면, IT용어백과사전 크루가 새로운 용어를 추천드릴게요.
                         </p>
                     </>
@@ -111,64 +99,16 @@ const EmptySearchPage: React.FC = () => {
             </div>
 
             {/* 추천 검색어 */}
-            <div style={styles.recommendedContainer}>
+            <div className={styles.recommendedContainer}>
                 {recommendedKeywords.map((keyword, index) => (
-                    <div key={index} style={styles.keywordItem} onClick={() => {
-                        handleSearch(keyword)
-                    }}>
+                    <div key={index} className={styles.keywordItem}
+                         onClick={() => handleSearch(keyword)}>  {/* ✅ className 적용 */}
                         {keyword}
                     </div>
                 ))}
             </div>
         </div>
     );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#ffffff',
-        height: '100vh',
-        maxWidth: '375px',
-        margin: '0 auto',
-        padding: '16px',
-        boxSizing: 'border-box',
-    },
-    messageContainer: {
-        marginTop: '26px',
-        textAlign: 'left', // 왼쪽 정렬
-    },
-    messageTitle: {
-        fontSize: '16px',
-        fontWeight: '600',
-        color: '#1F1F1F',
-        marginBottom: '12px',
-    },
-    messageSubtitle: {
-        fontSize: '16px',
-        color: '#767676',
-        lineHeight: '1.5',
-        marginTop: '0px',
-        marginBottom: '0px'
-    },
-    recommendedContainer: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'flex-start', // 왼쪽 정렬
-        gap: '12px',
-        marginTop: '32px',
-    },
-    keywordItem: {
-        backgroundColor: '#F6F6F6',
-        borderRadius: '20px',
-        padding: '8px 16px',
-        fontSize: '14px',
-        color: '#1F1F1F',
-        textAlign: 'center',
-        cursor: 'pointer',
-        border: '1px solid #EBEBEB', // 테두리 추가
-    },
 };
 
 export default EmptySearchPage;

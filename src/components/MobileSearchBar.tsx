@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
 import { ReactComponent as ResetButtonIcon } from '../assets/reset-button.svg';
 import { ReactComponent as SearchButtonIcon } from '../assets/search-buttton.svg';
-
 import {useNavigate} from "react-router-dom";
 interface MobileSearchBarProps {
     onSearch?: (value: string) => void; // 검색 결과를 상위 컴포넌트로 전달하는 콜백 함수 (선택적)
@@ -37,6 +36,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
         }*/
 
         const trimValue:string = searchValue.trim()
+        console.log(searchValue)
         if (trimValue && onSearch) {
             onSearch(searchValue); // 상위 컴포넌트로 검색어 전달
         }else if(!trimValue){
@@ -53,8 +53,9 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
 
     // Enter 키 입력 시 검색 실행
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            handleSearch();
+        if (e.key === 'Enter' && !e.repeat) {
+            e.preventDefault()
+            handleSearch()
         }
     };
 
@@ -89,7 +90,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                         placeholder="검색어를 입력하세요."
                         value={searchValue}
                         onChange={handleInputChange} // 검색어 변경 시 호출
-                        onKeyPress={handleKeyPress} // Enter 키 입력 시 호출
+                        onKeyUp={handleKeyPress} // Enter 키 입력 시 호출
                         aria-label="Search input"
                     />
                 </div>
@@ -116,6 +117,7 @@ const MobileSearchBar: React.FC<MobileSearchBarProps> = ({ onSearch, value = '' 
                     fill: #444449; /* SVG 아이콘 색상을 위한 fill 속성 */
                 }
                 .mobile-search-container {
+                  margin: 0 auto;
                     width: 100%; /* 고정 너비 대신 유동적 너비 */
                     max-width: 400px; /* 최대 너비 설정 */
                     height: 48px;
