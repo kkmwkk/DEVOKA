@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MobileMain from "./MobileMain";
 import {MobileDetailDictionaryPage} from "./components/MobileDetailDictionaryPage";
-import MobileDetailSearchPage from "./components/MobileDetailSearchPage";
-import MobileRecentSearchPage from "./components/MobileRecentSearchPage";
-import MobileEmptySearchPage from "./components/MobileEmptySearchPage";
+import MobileDetailSearchPage from "./components/mobileDetailSearchPage/MobileDetailSearchPage";
+import MobileRecentSearchPage from "./components/mobileRecentSearchPage/MobileRecentSearchPage";
+import MobileEmptySearchPage from "./components/mobileEmptySearchPage/MobileEmptySearchPage";
 
 
 const App = () => {
